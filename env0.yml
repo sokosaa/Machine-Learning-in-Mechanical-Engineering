@@ -1,0 +1,5 @@
+name: env0
+channels:
+  - defaults
+dependencies:
+  - python=3.10
