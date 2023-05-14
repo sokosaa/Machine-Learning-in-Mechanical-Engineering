@@ -1,0 +1,13 @@
+However, it is not as good as the KNN model. This is likely due to the fact that the KNN model is more flexible and can create more complex decision boundaries. The DT model is more rigid and can only create straight lines to split the data.
+
+
+
+The confusion matrix is the same for both models. 
+
+In this case, the 23rd prediction of DT1 is 0 and the 23rd prediction of DT2 is 1 (while the corresponding actual value of y_test is 0). So, for this particular instance, DT1 correctly predicted the class, while DT2 made an incorrect prediction.
+
+But if we look at the 13th instance, the opposite has occured. DT1 was incorrect, while DT2 was correct.
+
+So, even though the two models made different predictions for these two instances, they both made one correct and one incorrect prediction. Thus, when the confusion matricies are computed, the overall counts of `true positives`, `false positives`, `true negatives`, and `false negatives` end up being the same, leading to identical confusion matrices.
+
+Thus, we will only plot one heatmap confusion matrix at represents both models:
