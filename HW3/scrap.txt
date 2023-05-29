@@ -1,0 +1,2 @@
+# print('Training MSE: ', mean_squared_error(df_train['H'], df_train['H_pred']))
+# print('Testing MSE: ', mean_squared_error(df_test['H'], df_test['H_pred']))
