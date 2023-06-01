@@ -1,2 +1,69 @@
 # print('Training MSE: ', mean_squared_error(df_train['H'], df_train['H_pred']))
 # print('Testing MSE: ', mean_squared_error(df_test['H'], df_test['H_pred']))
+
+
+# for i in range(len(dependant_vars)):
+#     print(f'MAPE for {dependant_vars[i]}: {mean_absolute_percentage_error(df_test[dependant_vars[i]], df_test[dependant_vars[i] + "_pred"])}')
+
+
+# plot feature importance
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+axes[0].barh(independent_vars, rfr_W.feature_importances_)
+axes[0].set_title('W Feature Importance')
+axes[1].barh(independent_vars, rfr_H.feature_importances_)
+axes[1].set_title('H Feature Importance')
+plt.tight_layout()
+plt.show()
+
+
+# INCORRECT FORMULA?
+
+# RDT = DecisionTreeRegressor(max_depth=5, criterion='gign', random_state=42)
+
+# RDT.fit(df_train[independant_vars], df_train['W'])
+
+# RDT
+
+# our data is standerdized so we will not use poisson criterion
+
+
+
+from sklearn.model_selection import GridSearchCV
+from sklearn.tree import DecisionTreeRegressor
+
+# set parameters
+criterion = ['squared_error', 'friedman_mse', 'absolute_error']
+max_depth = [1, 2, 5, 10, 15]
+rdt_params = dict(criterion=criterion, max_depth=max_depth)
+
+# create regressor
+rdt = DecisionTreeRegressor(random_state=42)
+
+# create grid
+rdt_grid_W = GridSearchCV(rdt, rdt_params, cv=10)
+rdt_grid_H = GridSearchCV(rdt, rdt_params, cv=10)
+
+# fit grid
+rdt_grid_W.fit(df_all[independant_vars], df_all['W'])
+rdt_grid_H.fit(df_all[independant_vars], df_all['H'])
+
+# print basic results
+print(f'W Best Params: {rdt_grid_W.best_params_} Score: {rdt_grid_W.best_score_}')
+print(f'H Best Params: {rdt_grid_H.best_params_} Score: {rdt_grid_H.best_score_}')
+
+# create dataframe from cv_results_
+rdt_results_W = pd.DataFrame(rdt_grid_W.cv_results_)
+rdt_results_H = pd.DataFrame(rdt_grid_H.cv_results_)
+
+# pivot as prep for heatmap
+rdt_pivot_W = rdt_results_W.pivot_table(index='param_max_depth', columns='param_criterion', values='mean_test_score')
+rdt_pivot_H = rdt_results_H.pivot_table(index='param_max_depth', columns='param_criterion', values='mean_test_score')
+
+# heatmap to visualize results
+fig4, (ax4_1, ax4_2) = plt.subplots(1, 2, figsize=(11, 4))
+sns.heatmap(rdt_pivot_W, annot=True, cmap='YlGnBu', fmt='.4f', ax=ax4_1)
+ax4_1.set_title('Heatmap of mean test score for W')
+sns.heatmap(rdt_pivot_H, annot=True, cmap='YlGnBu', fmt='.4f', ax=ax4_2)
+ax4_2.set_title('Heatmap of mean test score for H')
+plt.tight_layout()
+plt.show()
