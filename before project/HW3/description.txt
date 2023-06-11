@@ -1,9 +1,0 @@
-Dear students,
-
-Please find attached the description of the third programming assignment along with the dataset files required to work on.
-
-The assignment consists of one mini case study.
-
-Your task is to explore the dataset in a way similar shown in class and as instructed in the document herein.
-
-You will then have to build supervised regression models using linear regression (simple, polynomial, and nultiple), regression trees and random forest regressors.

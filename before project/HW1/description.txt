@@ -1,7 +1,0 @@
-﻿Dear students,
-
-Please find attached the description of the first programming assignment along with the dataset files required to work on.
-
-The assignment consists of three mini case studies of three different datasets.
-
-Your task is to explore the datasets in a way similar shown in class and as instructed in the document herein.
